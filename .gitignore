@@ -1,0 +1,8 @@
+# Ignore everything by default
+*
+
+# But track these files/directories
+!.gitignore
+!.cursor/
+!.cursor/**
+!project_ideas.md
