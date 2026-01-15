@@ -1,0 +1,538 @@
+---
+title: Project Planning
+description: Guidelines and template for project_details.md planning document
+applies_to_commands: [projectplan]
+---
+
+# Project Planning Guidelines
+
+This file defines how to create the `project_details.md` planning document that serves as the single source of truth before issue generation.
+
+---
+
+## 1. PURPOSE OF PROJECT_DETAILS.MD
+
+The `project_details.md` file is created BEFORE any issues are generated. It serves as:
+
+1. **Planning Document** - Complete project blueprint
+2. **Review Document** - Team reviews and approves this before issue generation
+3. **Single Source of Truth** - All project information in one place
+4. **Issue Generation Input** - Used by `/generate` command to create issues
+
+---
+
+## 2. WORKFLOW
+
+```
+Step 1: /projectplan <number>
+   ↓
+Step 2: Creates project_details.md
+   ↓
+Step 3: Team reviews and requests changes
+   ↓
+Step 4: Team approves
+   ↓
+Step 5: /generate <path-to-project_details.md>
+   ↓
+Step 6: Issues are generated
+```
+
+---
+
+## 3. PROJECT_DETAILS.MD TEMPLATE
+
+Every `project_details.md` file MUST follow this structure:
+
+```markdown
+# [Project Name]
+
+---
+
+## 1. Project Overview
+
+### 1.1 Description
+[Detailed description of what the project does and what problem it solves]
+
+### 1.2 Target Users
+[Who will use this application]
+
+### 1.3 Core Value Proposition
+[What makes this project useful/unique]
+
+---
+
+## 2. Features
+
+### 2.1 Feature List
+[Bulleted list of all features from project_ideas.md]
+
+Example:
+- User authentication with Firebase
+- Upload and store recordings
+- Automatic transcription using LLM
+- AI-powered summarization
+- Tag and organize entries
+- Search through transcriptions
+- Export data
+
+### 2.2 Feature Implementation Approach
+[For each major feature, explain HOW it will be implemented using allowed technologies]
+
+Example:
+**Audio Upload and Storage:**
+- Frontend: React component with file input
+- Backend: FastAPI endpoint to receive files
+- Storage: Local file system or cloud storage
+- Database: SQLite to store metadata
+
+**Transcription and Analysis:**
+- Use LangChain with LLM (NO specialized transcription libraries)
+- LLM analyzes audio content and generates transcription
+- Store results in SQLite database
+
+---
+
+## 3. Technology Stack
+
+### 3.1 Frontend
+- React 19
+- Vite (build tool)
+- Tailwind CSS (styling)
+- React Router DOM (routing)
+- Axios or Fetch (API calls)
+
+### 3.2 Backend
+- Python 3.12+
+- FastAPI (REST API)
+- Uvicorn (ASGI server)
+- Pydantic (data validation)
+
+### 3.3 Database
+- SQLite (for application data ONLY, NOT authentication)
+
+### 3.4 Authentication
+- Firebase Authentication (email/password)
+- Firebase SDK in frontend
+
+### 3.5 AI/ML
+- LangChain (basic chains)
+- Google Gemini LLM
+- Simple vector stores (if needed for RAG)
+
+### 3.6 Development Tools
+- UV (Python package manager)
+- npm (Node package manager)
+- Git (version control)
+
+---
+
+## 4. Possible Challenges and Solutions
+
+### 4.1 Technical Challenges
+[List potential technical difficulties and how to address them]
+
+Example:
+- **Challenge:** Large audio files may take time to process
+  **Solution:** Implement loading states and progress indicators
+
+- **Challenge:** LLM API rate limits
+  **Solution:** Implement retry logic and user feedback
+
+### 4.2 Learning Curve Challenges
+[What might be difficult for students]
+
+Example:
+- Firebase setup and configuration
+- Understanding async operations in React
+- Connecting frontend to backend APIs
+
+---
+
+## 5. API Endpoints
+
+### 5.1 Endpoint Table
+
+| Method | Endpoint | Protected | Purpose | LLM Integration | Request Body | Response |
+|--------|----------|-----------|---------|-----------------|--------------|----------|
+| POST | /api/auth/signup | No | User registration via Firebase | No | {email, password} | {success, message} |
+| POST | /api/auth/login | No | User login via Firebase | No | {email, password} | {success, token} |
+| POST | /api/recordings | Yes | Upload new recording | Yes | {file, userId} | {id, status} |
+| GET | /api/recordings | Yes | Get all user recordings | No | - | [{id, title, date}] |
+| GET | /api/recordings/:id | Yes | Get single recording | No | - | {id, title, transcription, summary} |
+| DELETE | /api/recordings/:id | Yes | Delete recording | No | - | {success, message} |
+| POST | /api/recordings/:id/tags | Yes | Add tags to recording | No | {tags[]} | {success, tags} |
+| DELETE | /api/recordings/:id/tags/:tag | Yes | Remove tag | No | - | {success, message} |
+| GET | /api/search | Yes | Search recordings | No | ?query=text | [{id, title, matches}] |
+
+### 5.2 Protected vs Unprotected Endpoints
+
+**Unprotected (Public):**
+- All authentication endpoints (handled by Firebase)
+- Landing page content endpoints (if any)
+
+**Protected (Requires Firebase Auth):**
+- All CRUD operations on user data
+- All data retrieval endpoints
+- All LLM processing endpoints
+
+### 5.3 Endpoints Requiring LLM Integration
+
+List endpoints that need LangChain/LLM processing:
+- POST /api/recordings (analyze audio with LLM)
+- POST /api/recordings/:id/summarize (generate summary)
+- GET /api/search (semantic search with embeddings)
+
+---
+
+## 6. Frontend Structure
+
+### 6.1 Pages
+
+| Page Name | Route | Protected | Purpose | Main Components |
+|-----------|-------|-----------|---------|-----------------|
+| Landing | / | No | Welcome page with app info | Navbar, Hero, Features, Footer |
+| Signup | /signup | No | User registration | SignupForm |
+| Login | /login | No | User authentication | LoginForm |
+| Dashboard | /dashboard | Yes | Main user interface | Navbar, RecordingList, UploadButton |
+| Recording Detail | /recordings/:id | Yes | View single recording | RecordingDetail, TranscriptionView, TagManager |
+| Profile | /profile | Yes | User profile settings | ProfileForm, SettingsPanel |
+
+**Total Pages:** [Count]
+
+### 6.2 Components
+
+| Component Name | Used On Pages | Purpose | Props |
+|----------------|---------------|---------|-------|
+| Navbar | All pages | Navigation header | {user, onLogout} |
+| Hero | Landing | Hero section with CTA | - |
+| Features | Landing | Feature showcase | {features[]} |
+| Footer | All pages | Footer with links | - |
+| SignupForm | Signup | Registration form | {onSubmit} |
+| LoginForm | Login | Login form | {onSubmit} |
+| RecordingList | Dashboard | Display recordings | {recordings[], onSelect} |
+| RecordingCard | Dashboard | Single recording card | {recording, onClick} |
+| UploadButton | Dashboard | Upload trigger | {onUpload} |
+| UploadModal | Dashboard | Upload interface | {isOpen, onClose, onSubmit} |
+| RecordingDetail | Recording Detail | Full recording view | {recording} |
+| TranscriptionView | Recording Detail | Display transcription | {text} |
+| TagManager | Recording Detail | Manage tags | {tags[], onAdd, onRemove} |
+| SearchBar | Dashboard | Search interface | {onSearch} |
+| LoadingSpinner | Multiple | Loading indicator | {size} |
+| ErrorMessage | Multiple | Error display | {message} |
+
+**Total Components:** [Count]
+
+### 6.3 Component-to-Page Mapping
+
+**Landing Page:**
+- Navbar
+- Hero
+- Features
+- Footer
+
+**Signup Page:**
+- Navbar
+- SignupForm
+- Footer
+
+**Login Page:**
+- Navbar
+- LoginForm
+- Footer
+
+**Dashboard:**
+- Navbar
+- SearchBar
+- RecordingList
+  - RecordingCard (repeated)
+- UploadButton
+- UploadModal
+- LoadingSpinner (conditional)
+- ErrorMessage (conditional)
+- Footer
+
+**Recording Detail Page:**
+- Navbar
+- RecordingDetail
+- TranscriptionView
+- TagManager
+- LoadingSpinner (conditional)
+- ErrorMessage (conditional)
+- Footer
+
+---
+
+## 7. Issue Planning Overview
+
+### 7.1 Issue Categories
+
+**Foundation (Issues 1-8):**
+- Project setup
+- Static UI pages (Landing, Signup, Login)
+- Firebase authentication setup
+- Firebase integration
+- Dashboard UI
+
+**Core Features (Issues 9-15):**
+- Upload functionality (backend + frontend)
+- Display recordings (backend + frontend)
+- Recording detail view (backend + frontend)
+- Delete functionality (backend + frontend)
+
+**Advanced Features (Issues 16-18):**
+- LLM integration for analysis
+- Search functionality
+- Tag management
+
+**Final (Issue 19):**
+- Complete testing and flow verification
+
+**Total Estimated Issues:** 15-20 (flexible based on feature complexity)
+
+### 7.2 Issue-to-Responsibility Mapping
+
+| Issue # | Issue Name | Builds Page | Creates Components | Implements Endpoints | Notes |
+|---------|------------|-------------|-------------------|---------------------|-------|
+| 01 | Project Setup | - | - | - | README format |
+| 02 | Landing Page UI | Landing | Navbar, Hero, Features, Footer | - | Static only |
+| 03 | Signup Page UI | Signup | SignupForm | - | Static form |
+| 04 | Login Page UI | Login | LoginForm | - | Static form |
+| 05 | Firebase Auth Setup | - | - | - | Configuration |
+| 06 | Integrate Signup | - | - | - | Connect to Firebase |
+| 07 | Integrate Login | - | - | - | Connect to Firebase |
+| 08 | Dashboard UI | Dashboard | RecordingList, RecordingCard, UploadButton | - | Protected route |
+| 09 | Upload Feature | - | UploadModal | POST /api/recordings | Combined F+B |
+| 10 | Display Recordings | - | - | GET /api/recordings | Backend + integrate |
+| 11 | Recording Detail | Recording Detail | RecordingDetail, TranscriptionView | GET /api/recordings/:id | Combined F+B |
+| 12 | Delete Feature | - | - | DELETE /api/recordings/:id | Backend + integrate |
+| 13 | LLM Analysis | - | - | POST /api/recordings/:id/analyze | LangChain integration |
+| 14 | Tag Management | - | TagManager | POST/DELETE /api/recordings/:id/tags | Combined F+B |
+| 15 | Search Feature | - | SearchBar | GET /api/search | Combined F+B |
+| 16 | Final Testing | - | - | - | Complete flow verification |
+
+### 7.3 Combined Frontend + Backend Issues
+
+When features are strongly connected, combine them:
+- Issue 09: Upload Feature (both API and UI together)
+- Issue 11: Recording Detail (both API and UI together)
+- Issue 14: Tag Management (both API and UI together)
+- Issue 15: Search Feature (both API and UI together)
+
+This reduces context switching and helps students understand the complete feature.
+
+---
+
+## 8. Database Schema (High-Level)
+
+**Note:** Specific fields and relationships are decided by students. This is conceptual guidance only.
+
+### 8.1 Tables Needed
+
+**recordings**
+- Purpose: Store recording metadata
+- Essential fields: identifier, user reference, file path, timestamps
+- Students decide: exact field names, data types, additional fields
+
+**tags**
+- Purpose: Store tags for organization
+- Essential fields: identifier, tag name
+- Students decide: structure and relationships
+
+**recording_tags**
+- Purpose: Many-to-many relationship
+- Essential fields: recording reference, tag reference
+- Students decide: implementation approach
+
+### 8.2 Database Design Principles
+
+- Keep it simple - only essential tables
+- Let students design field names and types
+- Focus on functionality, not optimization
+- Use SQLite for local development
+- No authentication data in SQLite (use Firebase)
+
+---
+
+## 9. Project Flow Summary
+
+### 9.1 User Journey
+
+1. **First Visit:**
+   - User lands on Landing page
+   - Sees features and benefits
+   - Clicks "Sign Up"
+
+2. **Registration:**
+   - Fills signup form
+   - Firebase creates account
+   - Redirects to login
+
+3. **Login:**
+   - Enters credentials
+   - Firebase authenticates
+   - Redirects to Dashboard
+
+4. **Main Usage:**
+   - Views dashboard with recordings list
+   - Clicks upload to add new recording
+   - LLM processes and analyzes
+   - Views transcription and summary
+   - Adds tags for organization
+   - Searches through recordings
+
+5. **Detail View:**
+   - Clicks on recording card
+   - Views full details
+   - Manages tags
+   - Can delete if needed
+
+### 9.2 Data Flow
+
+```
+User Action → Frontend Component → API Call → Backend Endpoint → Database/LLM → Response → UI Update
+```
+
+Example:
+```
+Upload Recording → UploadModal → POST /api/recordings → FastAPI → LangChain+LLM → Analysis Results → Display in Dashboard
+```
+
+---
+
+## 10. Success Criteria
+
+### 10.1 Technical Success
+
+- [ ] All endpoints work correctly
+- [ ] Firebase authentication functions properly
+- [ ] LLM integration provides useful analysis
+- [ ] Database operations are reliable
+- [ ] Frontend is responsive and user-friendly
+
+### 10.2 Learning Success
+
+- [ ] Students understand full-stack development
+- [ ] Students can connect frontend to backend
+- [ ] Students learn Firebase authentication
+- [ ] Students understand LLM integration basics
+- [ ] Students can debug and fix issues independently
+
+### 10.3 Project Completion
+
+- [ ] All features from feature list are implemented
+- [ ] Application works end-to-end
+- [ ] Code is clean and documented
+- [ ] UI is polished and accessible
+- [ ] Project is ready for demonstration
+
+---
+
+## 11. Notes and Considerations
+
+### 11.1 For Reviewers
+
+- Verify all endpoints are necessary
+- Check that tech stack matches allowed technologies
+- Ensure issue count is reasonable (15-20)
+- Confirm features are achievable in timeframe
+- Validate that challenges are addressed
+
+### 11.2 For Students
+
+- This document is your roadmap
+- You can improve upon suggested structures
+- Focus on learning, not perfection
+- Ask for help when stuck
+- Document your decisions and learnings
+
+### 11.3 Flexibility
+
+- Component names can be changed
+- Additional components can be added
+- Endpoint paths can be modified
+- Database schema can be improved
+- The goal is a working, well-designed application
+```
+
+---
+
+## 4. GENERATION RULES FOR PROJECT_DETAILS.MD
+
+When generating `project_details.md` from `project_ideas.md`:
+
+### 4.1 Extract and Transform
+
+1. **Project Name** - Use as-is from project_ideas.md
+2. **Description** - Expand with more detail
+3. **Features** - Copy all features, add implementation approach
+4. **Tech Stack** - Apply technology constraints (replace disallowed tech)
+
+### 4.2 Generate Endpoints
+
+Based on project type:
+- **Audio projects:** Upload, list, detail, delete, analyze, search
+- **Image projects:** Upload, list, detail, delete, analyze, search
+- **NLP projects:** Add document, list, search, detail, delete
+- **Hybrid projects:** Combine relevant endpoints
+
+### 4.3 Generate Pages and Components
+
+**Standard pages for ALL projects:**
+- Landing (/)
+- Signup (/signup)
+- Login (/login)
+- Dashboard (/dashboard)
+- Detail view (/:resource/:id)
+
+**Project-specific pages:**
+- Based on features (e.g., search page, profile page)
+
+**Standard components for ALL projects:**
+- Navbar, Footer, Hero, Features
+- SignupForm, LoginForm
+- List components, Card components
+- LoadingSpinner, ErrorMessage
+
+**Project-specific components:**
+- Based on features (e.g., AudioPlayer, ImageViewer, SearchBar)
+
+### 4.4 Plan Issues
+
+1. **Issues 1-8:** Always the same (foundation + Firebase auth)
+2. **Issues 9-onwards:** Based on features
+3. **Combine related frontend+backend work**
+4. **Target 15-20 total issues**
+5. **Last issue:** Always final testing
+
+---
+
+## 5. VALIDATION CHECKLIST
+
+Before completing `project_details.md`:
+
+□ All sections are filled out completely
+□ Tech stack uses ONLY allowed technologies
+□ Endpoints are clearly defined with protection status
+□ All pages are listed with routes and components
+□ All components are listed with their usage
+□ Component-to-page mapping is complete
+□ Issue planning shows clear progression
+□ Issue count is 15-20
+□ Combined issues are identified
+□ Final testing issue is included
+□ Database schema is high-level (not prescriptive)
+□ Challenges are identified with solutions
+□ Success criteria are clear
+
+---
+
+## 6. REMEMBER
+
+**This document is for PLANNING, not IMPLEMENTATION:**
+- Be comprehensive but not prescriptive
+- Provide structure but allow flexibility
+- List what needs to be built, not how to build it
+- Focus on the big picture
+- Make it easy to review and approve
+- Ensure it's easy to modify if changes are needed
+- This becomes the blueprint for issue generation

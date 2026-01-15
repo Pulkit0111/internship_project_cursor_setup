@@ -1,0 +1,454 @@
+---
+title: Issue Guardrails
+description: Consistency rules and guardrails for issue generation
+applies_to_commands: [generate]
+---
+
+# Issue Guardrails for Consistency
+
+This file defines strict guardrails to ensure consistent issue generation across any AI model.
+
+---
+
+## 1. FORMAT GUARDRAILS (EXACT TEMPLATE STRUCTURE)
+
+**RULE: Every issue file MUST contain these sections in THIS EXACT ORDER:**
+
+```markdown
+1. # [Issue Title]                          ← H1 heading, actual title (NOT "## Title")
+2. ---
+3. ## Summary
+4. ---
+5. ## Learning goals
+6. ---
+7. ## Requirements / Acceptance criteria
+8. ---
+9. ## Step-by-step guide
+10. ---
+11. ## Time estimate
+12. ---
+13. ## Constraints
+14. ---
+15. ## Dependencies
+16. ---
+17. ## Definition of Done
+18. ---
+19. ## Raise PR
+```
+
+**VIOLATIONS (Will cause INVALID issue):**
+- ⛔ Missing ANY section
+- ⛔ Sections in different order
+- ⛔ Adding extra sections
+- ⛔ Using `## Title` heading instead of `# Actual Title`
+
+**EXCEPTION:** Issue #01 (Project Setup) uses README format only
+
+---
+
+## 2. CONTENT GUARDRAILS (FORBIDDEN CONTENT)
+
+**NEVER generate issues containing:**
+
+❌ Code snippets in any programming language
+❌ Variable names, function names, class names
+❌ Database table definitions or field specifications
+❌ SQL CREATE TABLE statements
+❌ JSON schema examples
+❌ API request/response examples with actual data structures
+❌ Import statements (e.g., `from x import y`)
+❌ Configuration file contents
+❌ OCR library references
+❌ JWT, OAuth, session ID, token, password hashing references
+❌ Docker, Kubernetes, containerization mentions
+❌ "Confirm password" field references
+❌ Backend authentication implementation details
+❌ Specific field names (e.g., "user_id", "created_at")
+❌ Table column specifications (e.g., "email VARCHAR(255)")
+❌ Database relationships (e.g., "foreign key to users table")
+
+**IF FORBIDDEN CONTENT IS ABOUT TO BE GENERATED → STOP AND REPHRASE AS HIGH-LEVEL GUIDANCE**
+
+---
+
+## 3. REQUIRED CONTENT GUARDRAILS
+
+**ALWAYS include in every issue (except Issue #01):**
+
+✅ At least 3 learning goals
+✅ At least 5 acceptance criteria (checkboxes)
+✅ At least 5-7 steps in step-by-step guide
+✅ Each step MUST have: Action, Where, Goal, Reference
+✅ Time estimate between 60-120 minutes
+✅ Both "Blocked by" and "Unblocks" in Dependencies
+✅ At least 5 items in Definition of Done
+✅ All 8 items in Raise PR section
+
+---
+
+## 4. NAMING GUARDRAILS (DETERMINISTIC FILE NAMES)
+
+**File name format:** `issue-XX-descriptive-name.md`
+
+**FIXED FILE NAMES (non-negotiable for first 8 issues):**
+
+| Issue | Exact File Name |
+|-------|-----------------|
+| #01 | `issue-01-project-setup.md` |
+| #02 | `issue-02-landing-page-ui.md` |
+| #03 | `issue-03-signup-page-ui.md` |
+| #04 | `issue-04-login-page-ui.md` |
+| #05 | `issue-05-firebase-auth-setup.md` |
+| #06 | `issue-06-integrate-signup-firebase.md` |
+| #07 | `issue-07-integrate-login-firebase.md` |
+| #08 | `issue-08-dashboard-ui.md` |
+
+**For Issues #09 onwards:** Use descriptive names following pattern:
+- Lowercase only
+- Hyphenated words
+- Max 5 words
+- Pattern: `issue-XX-verb-noun-context.md`
+- Examples: `issue-09-create-todo-api.md`, `issue-10-display-todos-dashboard.md`
+
+---
+
+## 5. ISSUE-SPECIFIC GUARDRAILS
+
+### 5.1 ISSUE #01 (PROJECT SETUP)
+- ⚠️ MUST use README format only
+- ⚠️ DO NOT add issue template sections (no Learning Goals, Acceptance Criteria, etc.)
+- ⚠️ Copy VERBATIM from the embedded template
+- ⚠️ DO NOT modify, summarize, or regenerate the README
+- ⚠️ This acts as: Project context, Tech stack reference, Baseline understanding
+
+### 5.2 ISSUE #02 (LANDING PAGE)
+- ⚠️ MUST be static UI only
+- ⚠️ MUST NOT mention: API calls, state management, routing logic, authentication
+- ⚠️ MUST include: Navbar, 3-4 static sections (hero, features, footer)
+- ⚠️ NO dynamic content, NO backend interaction
+- ⚠️ IF any logic mentioned → REMOVE IT
+
+### 5.3 ISSUE #03-04 (SIGNUP/LOGIN UI)
+- ⚠️ MUST be static forms only
+- ⚠️ MUST NOT mention: confirm password, backend connection, API integration
+- ⚠️ MUST NOT mention: password hashing, session storage, validation beyond client-side
+- ⚠️ Firebase integration comes LATER in issues #06-07
+
+### 5.4 ISSUE #05 (FIREBASE AUTH SETUP)
+- ⚠️ MUST focus on Firebase project creation and SDK setup
+- ⚠️ MUST NOT mention: SQLite for auth, session tables, password storage, backend auth
+- ⚠️ MUST reference Firebase documentation only
+- ⚠️ This is configuration issue, not implementation
+
+### 5.5 AUTHENTICATION ISSUES (#06-07)
+- ⚠️ MUST use wording: "Integrate X with Firebase"
+- ⚠️ MUST NOT use wording: "Connect X to Backend" or "Connect X Frontend to Backend"
+- ⚠️ MUST NOT include backend authentication logic
+- ⚠️ MUST reference Firebase SDK methods (conceptually, no code)
+
+### 5.6 DATABASE ISSUES
+- ⚠️ MUST NOT provide table schemas or field definitions
+- ⚠️ MUST let students decide: fields, relationships, data types
+- ⚠️ MUST keep guidance conceptual: "Design tables to store X information"
+- ⚠️ MUST NOT include SQL statements or column specifications
+
+---
+
+## 6. TECHNOLOGY GUARDRAILS (HARD BOUNDARIES)
+
+**IF TECHNOLOGY MENTIONED IS NOT IN ALLOWED LIST → REPLACE OR REMOVE**
+
+**Validation on EVERY step, EVERY action:**
+1. Check if technology is in allowed list
+2. If NOT → Apply replacement from technology-constraints.mdc
+3. If no replacement → REMOVE the technology mention
+4. Continue with allowed technologies only
+
+**Example replacements during generation:**
+- "Set up PostgreSQL database" → "Set up SQLite database"
+- "Implement JWT authentication" → "Integrate Firebase Authentication"
+- "Use OCR to extract text" → "Use LLM via LangChain to understand the content"
+- "Deploy with Docker" → REMOVE entirely
+
+---
+
+## 7. DEPENDENCY GUARDRAILS (LOGICAL FLOW)
+
+**FIXED DEPENDENCY RULES (non-negotiable):**
+
+```
+Issue #01 → Unblocks: #02, #03, #04, #05
+
+Issue #02 → Blocked by: #01 | Unblocks: None
+Issue #03 → Blocked by: #01 | Unblocks: #06
+Issue #04 → Blocked by: #01 | Unblocks: #07
+Issue #05 → Blocked by: #01 | Unblocks: #06, #07
+
+Issue #06 → Blocked by: #03, #05 | Unblocks: #08
+Issue #07 → Blocked by: #04, #05 | Unblocks: #08
+
+Issue #08 → Blocked by: #06, #07 | Unblocks: (project-specific CRUD issues)
+```
+
+**VALIDATION RULES:**
+- ❌ No circular dependencies
+- ❌ No issue blocked by a later issue number
+- ❌ Every issue (except last few) must unblock something
+- ✅ Dependencies must form a logical DAG (Directed Acyclic Graph)
+
+---
+
+## 8. TIME ESTIMATION GUARDRAILS
+
+**MINIMUM:** 60 minutes (no issue less than this)
+**MAXIMUM:** 120 minutes (no issue more than this)
+
+**SCALING RULES:**
+
+| Issue Type | Time Range | Rationale |
+|------------|------------|-----------|
+| Static UI pages (no logic) | 60-75 minutes | Simple HTML/CSS/JSX |
+| UI forms with state | 65-80 minutes | State management complexity |
+| Firebase setup/integration | 70-90 minutes | Configuration + SDK setup |
+| CRUD API endpoint | 60-80 minutes | Standard FastAPI patterns |
+| Frontend-API integration | 60-75 minutes | Fetch + display logic |
+| LangChain/LLM feature | 90-120 minutes | AI integration complexity |
+| Multi-component feature | 100-120 minutes | Multiple moving parts |
+| Combined frontend+backend | 90-120 minutes | Full-stack feature |
+
+**IF TIME < 60 OR TIME > 120 → ADJUST TO FIT BOUNDS**
+
+---
+
+## 9. ABSTRACTION GUARDRAILS (WHAT NOT HOW)
+
+**Issues MUST describe WHAT to build, NEVER HOW to build it**
+
+**ALLOWED PHRASES:**
+- ✅ "Create a component that displays..."
+- ✅ "Build an API endpoint that handles..."
+- ✅ "Implement a form that collects..."
+- ✅ "Set up Firebase authentication for..."
+- ✅ "Design a database to store..."
+- ✅ "Use LangChain to analyze..."
+
+**FORBIDDEN PHRASES:**
+- ❌ "Create a function called X that..."
+- ❌ "Define a table with columns X, Y, Z..."
+- ❌ "Use the following code..."
+- ❌ "Import X from Y..."
+- ❌ "Set the variable X to..."
+- ❌ "Add these fields: field1, field2..."
+- ❌ "Create a table called users with..."
+
+**STUDENT DECISIONS (never prescribe):**
+- Database field names
+- Table relationships
+- Function/variable names
+- Component structure details
+- State shape
+- API response format specifics
+
+**IF OVER-DEFINED → ABSTRACT TO HIGHER LEVEL**
+
+---
+
+## 10. VALIDATION CHECKPOINTS (SELF-VERIFICATION)
+
+**PRE-GENERATION CHECKLIST (Before generating EACH issue):**
+
+□ Issue number is correct
+□ File name follows exact pattern
+□ No forbidden technologies will be mentioned
+□ No code snippets will be included
+□ Dependencies make logical sense
+□ Time estimate is within 60-120 minutes
+□ All required sections will be present
+
+**POST-GENERATION CHECKLIST (After generating EACH issue):**
+
+□ Title is H1 heading (format: `# Actual Title`, not `## Title`)
+□ All 10 sections present in correct order
+□ No confirm password mentioned
+□ No backend auth logic included
+□ Firebase for auth (if auth-related)
+□ SQLite for data (if data-related)
+□ LangChain for AI (if AI-related)
+□ Abstraction level appropriate
+□ No OCR/predefined schemas
+□ No code snippets anywhere
+□ Time is 60-120 minutes
+
+---
+
+## 11. ESCAPE PREVENTION GUARDRAILS
+
+**DO NOT:**
+- ❌ Add "bonus" or "optional" sections
+- ❌ Include "advanced tips" or "pro tips"
+- ❌ Suggest alternative approaches
+- ❌ Provide multiple implementation options
+- ❌ Add explanatory notes outside template structure
+- ❌ Include personal recommendations or opinions
+- ❌ Deviate from the exact template structure for ANY reason
+
+**IF TEMPTED TO ADD EXTRAS → STOP, FOLLOW TEMPLATE EXACTLY**
+
+**DO NOT HALLUCINATE:**
+- ❌ Invent technologies not in allowed list
+- ❌ Reference libraries not taught to students
+- ❌ Create complex architectures
+- ❌ Add features not in project_ideas.md or project_details.md
+- ❌ Skip any issue numbers (must be sequential)
+
+**IF UNSURE → USE THE SIMPLER, MORE ABSTRACT OPTION**
+
+---
+
+## 12. NEW GUIDELINES FOR COMBINED ISSUES
+
+### 12.1 Developer Flexibility
+**Add to Constraints section or as separate note in every issue:**
+
+```
+**Note for Developers:**
+The mentioned points, schemas, and structures are essential guidance. You are free to improve or add better structures if needed. Additions or deletions of files, components, or changes are allowed if they improve the project. The goal is to build a clean, complete project with good UI and proper validation.
+```
+
+### 12.2 Backend Issues Must Start With Database Setup
+**First step in ALL backend issues:**
+
+```
+1. **Set up database and models**
+   - Action: Create the database structure and define essential models for this feature. Only essential fields are suggested; you may modify or improve the models as needed.
+   - Where: Backend/database/ or Backend/models/
+   - Goal: Have the necessary data layer ready before implementing the endpoint
+   - Reference: [SQLite Python Documentation](https://docs.python.org/3/library/sqlite3.html)
+```
+
+### 12.3 Combined Frontend + Backend Issues
+**When features are strongly connected, combine into single issue:**
+
+- Reduces total issue count (can be 15-20 instead of 20-24)
+- Gives students full context of complete feature
+- Helps understand frontend and backend simultaneously
+
+**Structure for combined issues:**
+```
+## Step-by-step guide
+
+### Backend Implementation
+
+1. **Set up database and models**
+   ...
+
+2. **Create API endpoint**
+   ...
+
+### Frontend Implementation
+
+3. **Create UI component**
+   ...
+
+4. **Integrate with backend API**
+   ...
+
+5. **Test complete feature**
+   ...
+```
+
+### 12.4 Issue Count Flexibility
+- Total issues can be **15-20** (not fixed at 20-24)
+- Combine related frontend+backend work when appropriate
+- Maintain logical progression and dependencies
+- Each issue should still be completable in 60-120 minutes
+
+---
+
+## 13. CONTENT RULES
+
+### 13.1 What to Include (REQUIRED)
+
+✅ High-level guidance on WHAT to build
+✅ Phrases like "Create a component that...", "Build an endpoint that...", "Set up..."
+✅ Links to official documentation (React, FastAPI, Firebase, LangChain docs)
+✅ File locations (Frontend/src/components/, Backend/routes/)
+✅ Clear goals for each step
+✅ Learning objectives appropriate for beginners
+✅ Acceptance criteria as checkboxes
+✅ Clear dependency mapping (Blocked by / Unblocks)
+
+### 13.2 What NOT to Include (FORBIDDEN)
+
+❌ ANY code snippets or example code
+❌ Specific variable names, function names, or implementation details
+❌ Code examples in markdown code blocks
+❌ Step-by-step coding instructions
+❌ Implementation patterns or boilerplate
+❌ Database table definitions or field specifications
+❌ SQL statements
+❌ JSON schemas
+❌ API request/response structures with actual field names
+❌ Import statements or configuration snippets
+❌ OCR library references (PyTesseract, Tesseract, etc.)
+❌ Authentication backend logic details
+❌ Password hashing code or logic
+❌ Session management implementation
+❌ References to "confirm password" fields
+
+### 13.3 Writing Style Examples
+
+**✅ GOOD EXAMPLES (High-level, abstract):**
+
+```
+Action: Create a signup page component that displays a form for collecting user credentials. Use Firebase SDK methods to handle registration when the form is submitted. Redirect users to the login page on successful signup.
+
+Action: Build an API endpoint that accepts file uploads and stores them appropriately. Use LangChain to analyze the file content with an LLM and save the insights to the database.
+
+Action: Design a database structure to store todo items with their relevant information. Students should decide what fields are needed based on the application requirements.
+
+Action: Implement a landing page with a navbar, hero section, feature cards, and footer. Keep it static with no dynamic functionality.
+```
+
+**❌ BAD EXAMPLES (Too specific, prescriptive):**
+
+```
+Action: Create a signup function like this:
+async function signup(email: string, password: string) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    ...
+}
+
+Action: Create a users table with these columns:
+- id: INTEGER PRIMARY KEY AUTOINCREMENT
+- email: VARCHAR(255) UNIQUE NOT NULL
+- password_hash: VARCHAR(255) NOT NULL
+
+Action: Import Firebase like this: import { initializeApp } from 'firebase/app';
+```
+
+---
+
+## 14. REMEMBER (CRITICAL RULES)
+
+**YOU ARE GENERATING ISSUES, NOT CODE:**
+- Issues are INSTRUCTIONS for students
+- Students figure out HOW to implement based on WHAT you describe
+- Every project gets Issue #01 (Project Setup README)
+- Tech stack must match allowed technologies ONLY
+- No code snippets, only high-level guidance
+- Progressive difficulty: setup → simple → advanced
+- Clear dependencies between issues
+- Realistic time estimates (60-120 minutes)
+- Firebase for auth, SQLite for data
+- LangChain + LLM for AI features (no OCR, no specialized libraries)
+- Students make architectural decisions
+- Abstract guidance, not prescriptive implementation
+- Follow ALL guardrails on EVERY issue
+
+**IF IN DOUBT:**
+- Use simpler, more abstract guidance
+- Reference official documentation
+- Let students decide implementation details
+- Follow the template EXACTLY
+- Check against all guardrails before proceeding

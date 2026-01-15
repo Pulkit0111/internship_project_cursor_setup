@@ -1,0 +1,643 @@
+---
+title: Issue Templates
+description: Standard issue template, Issue #01 README, and final testing template
+applies_to_commands: [generate]
+---
+
+# Issue Templates
+
+This file contains all issue templates used for generation.
+
+---
+
+## 1. STANDARD ISSUE TEMPLATE
+
+Every issue (except Issue #01 and final testing issue) MUST follow this EXACT structure:
+
+```markdown
+# [Issue Title - Use actual descriptive title here]
+
+---
+
+## Summary
+
+[Brief description of what this issue delivers and why it matters. 2-3 sentences.]
+
+---
+
+## Learning goals
+
+- [Learning objective 1]
+- [Learning objective 2]
+- [Learning objective 3]
+- [Optional: Learning objective 4]
+
+---
+
+## Requirements / Acceptance criteria
+
+- [ ] [Specific measurable condition 1]
+- [ ] [Specific measurable condition 2]
+- [ ] [Specific measurable condition 3]
+- [ ] [Specific measurable condition 4]
+- [ ] [Specific measurable condition 5]
+- [ ] [Optional: Additional criteria]
+
+---
+
+## Step-by-step guide
+
+1. **[Step 1 descriptive title]**
+   - Action: [What the student should do - high-level guidance, NO code]
+   - Where: [File/path/module where they should work]
+   - Goal: [What should be true after completing this step]
+   - Reference: [Link to official documentation]
+
+2. **[Step 2 descriptive title]**
+   - Action: [Concrete high-level actions for this step]
+   - Where: [Exact place in the codebase]
+   - Goal: [Outcome of this step]
+   - Reference: [Doc link]
+
+3. **[Step 3 descriptive title]**
+   - Action: [High-level guidance]
+   - Where: [Location]
+   - Goal: [Expected outcome]
+   - Reference: [Documentation link]
+
+4. **[Step 4 descriptive title]**
+   - Action: [What to build/implement]
+   - Where: [File location]
+   - Goal: [Success criteria]
+   - Reference: [External docs]
+
+5. **[Step 5 descriptive title]**
+   - Action: [Implementation guidance]
+   - Where: [Path]
+   - Goal: [Result]
+   - Reference: [Link]
+
+[Continue for 5-7 steps total]
+
+---
+
+## Time estimate
+
+- Expected time: [60-120 minutes based on complexity]
+
+---
+
+## Constraints
+
+- Tech stack: [React, FastAPI, SQLite, Firebase, LangChain - list relevant ones]
+- Not allowed: [No JWT, no Docker, no external auth providers, no code generation tools, no OCR]
+- Notes: [Any specific constraints for this issue - keep Firebase for auth, SQLite for data]
+
+**Note for Developers:**
+The mentioned points, schemas, and structures are essential guidance. You are free to improve or add better structures if needed. Additions or deletions of files, components, or changes are allowed if they improve the project. The goal is to build a clean, complete project with good UI and proper validation.
+
+---
+
+## Dependencies
+
+- Blocked by: [#XX, #YY - issue numbers that must be completed first]
+- Unblocks: [#ZZ, #AA - issue numbers that depend on this one]
+
+---
+
+## Definition of Done
+
+- [ ] All Requirements / Acceptance criteria are met.
+- [ ] Code follows project conventions.
+- [ ] Feature works as expected without errors.
+- [ ] No console errors or warnings.
+- [ ] [Issue-specific verification item]
+
+---
+
+## Raise PR
+
+- [ ] Create a feature branch following naming conventions.
+- [ ] Commit in small logical chunks with clear messages.
+- [ ] Ensure branch is up to date with `main`.
+- [ ] Push branch and open a PR.
+- [ ] Link the issue in the PR description.
+- [ ] Add screenshots or sample outputs (if applicable).
+- [ ] Test the feature and document test steps.
+- [ ] Request review from assigned reviewers.
+```
+
+**CRITICAL:** The title must be H1 (`#`), not H2 (`##`)
+
+---
+
+## 2. ISSUE #01 TEMPLATE (PROJECT SETUP)
+
+**IMPORTANT:** Issue #01 is ALWAYS "Project Setup" and uses README format (NOT issue template format).
+
+**File name:** `issue-01-project-setup.md`
+
+**Copy this VERBATIM (NO MODIFICATIONS):**
+
+```markdown
+# Internship Project Template
+
+This template includes a FastAPI backend with Google Gemini LLM integration and a React frontend with Tailwind CSS.
+
+## Project Structure
+
+```
+.
+├── Backend/                    # FastAPI backend application
+│   ├── main.py                 # Main backend server file
+│   ├── pyproject.toml          # Python project configuration
+│   ├── requirements.txt        # Python dependencies
+│   ├── uv.lock                 # UV lock file for dependency versions
+│   ├── README.md               # Backend-specific documentation
+│   └── .env                    # Environment variables (create this file)
+│
+└── Frontend/                   # React frontend application
+    ├── public/
+    │   └── vite.svg            # Vite logo
+    ├── src/
+    │   ├── components/
+    │   │   └── QuoteGenerator.jsx  # Quote generator component
+    │   ├── assets/
+    │   │   └── react.svg       # React logo
+    │   ├── App.jsx             # Main app component (layout wrapper)
+    │   ├── App.css             # App-specific styles
+    │   ├── main.jsx            # React entry point
+    │   └── index.css           # Global styles with Tailwind
+    ├── eslint.config.js        # ESLint configuration
+    ├── index.html              # HTML entry point
+    ├── package.json            # Node.js dependencies and scripts
+    ├── package-lock.json       # npm lock file
+    ├── postcss.config.js       # PostCSS configuration
+    ├── tailwind.config.js      # Tailwind CSS configuration
+    ├── vite.config.js          # Vite build tool configuration
+    └── README.md               # Frontend-specific documentation
+```
+
+## Getting Started
+
+### Clone the Repository
+
+First, you need to clone this repository to your local machine. This will download all the project files to your computer.
+
+**Repository URL:** https://github.com/progressionschool/internship-project-template
+
+**On Windows:**
+
+1. Open **Git Bash** (if you have Git installed) or **Command Prompt**
+2. Navigate to the directory where you want to save the project:
+   ```bash
+   cd C:\Users\YourName\Desktop
+   ```
+   (Replace `YourName` with your actual username)
+3. Clone the repository:
+   ```bash
+   git clone https://github.com/progressionschool/internship-project-template.git
+   ```
+4. Navigate into the project directory:
+   ```bash
+   cd internship-project-template
+   ```
+
+**On macOS:**
+
+1. Open **Terminal** (you can find it in Applications > Utilities)
+2. Navigate to the directory where you want to save the project:
+   ```bash
+   cd ~/Desktop
+   ```
+   (Or any other directory you prefer)
+3. Clone the repository:
+   ```bash
+   git clone https://github.com/progressionschool/internship-project-template.git
+   ```
+4. Navigate into the project directory:
+   ```bash
+   cd internship-project-template
+   ```
+
+**Note:** Make sure you have Git installed on your system. If you don't have Git installed, download it from [git-scm.com](https://git-scm.com/downloads).
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Python 3.12+** - [Download Python](https://www.python.org/downloads/)
+- **UV Package Manager** - Fast Python package installer (see installation below)
+- **Node.js 18+** - [Download Node.js](https://nodejs.org/)
+- **npm** (comes with Node.js) or **yarn**
+- **Google API Key** - Get one from [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+## Backend Setup
+
+### 1. Install UV Package Manager
+
+Install UV using pip:
+
+```bash
+pip install uv
+```
+
+For alternative installation methods, see the [UV documentation](https://github.com/astral-sh/uv).
+
+### 2. Navigate to Backend Directory
+
+```bash
+cd Backend
+```
+
+### 3. Create Virtual Environment
+
+Create a virtual environment using UV:
+
+```bash
+uv venv
+```
+
+This will create a `.venv` folder in the Backend directory.
+
+### 4. Activate Virtual Environment
+
+Activate the virtual environment:
+
+**On Windows:**
+```bash
+.venv\Scripts\activate
+```
+
+**On macOS/Linux:**
+```bash
+source .venv/bin/activate
+```
+
+### 5. Install Dependencies
+
+Install all packages from `requirements.txt`:
+
+```bash
+uv add -r requirements.txt
+```
+
+### 6. Create Environment File
+
+Create a `.env` file in the `Backend` directory:
+
+```bash
+# On macOS/Linux
+touch .env
+
+# On Windows
+type nul > .env
+```
+
+Add your Google API key to the `.env` file:
+
+```
+GOOGLE_API_KEY=your_api_key_here
+```
+
+Replace `your_api_key_here` with your actual Google API key from [Google AI Studio](https://makersuite.google.com/app/apikey).
+
+### 7. Run the Backend Server
+
+```bash
+uvicorn main:app --reload
+```
+
+The backend server will start at: **http://localhost:8000**
+
+- API Documentation: http://localhost:8000/docs
+- Health Check: http://localhost:8000/health
+- Random Quote Endpoint: http://localhost:8000/api/random-quote
+
+## Frontend Setup
+
+### 1. Navigate to Frontend Directory
+
+Open a new terminal window and navigate to the Frontend directory:
+
+```bash
+cd Frontend
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the Frontend Development Server
+
+```bash
+npm run dev
+```
+
+The frontend will start at: **http://localhost:5173** (or another port if 5173 is busy)
+
+## Testing the Connection
+
+1. Make sure both servers are running:
+
+   - Backend: http://localhost:8000
+   - Frontend: http://localhost:5173
+
+2. Open your browser and go to: http://localhost:5173
+
+3. Click the "Generate Quote" button
+
+4. You should see a random inspirational quote generated by the AI!
+
+## Available Endpoints
+
+### Backend Endpoints
+
+- `GET /` - Welcome message
+- `GET /health` - Health check endpoint
+- `GET /api/random-quote` - Sample endpoint to connect Frontend and Backend (generates random quote using Gemini LLM)
+
+## Development Commands
+
+### Backend
+
+```bash
+# Run development server with auto-reload
+uvicorn main:app --reload
+
+# Run on specific port
+uvicorn main:app --reload --port 8001
+```
+
+### Frontend
+
+```bash
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Run linter
+npm run lint
+```
+
+## Technologies Used
+
+### Backend
+
+- **FastAPI** - Modern Python web framework
+- **Uvicorn** - ASGI server
+- **Google Generative AI** - Gemini LLM integration
+- **python-dotenv** - Environment variable management
+
+### Frontend
+
+- **React 19** - UI library
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **ESLint** - Code linting
+
+## Next Steps
+
+Once everything is running fine, here are some steps to extend this template:
+
+1. **Create your own backend endpoints**
+
+   - Add new API endpoints in `Backend/main.py`
+   - Use FastAPI decorators like `@app.get()`, `@app.post()`, `@app.put()`, `@app.delete()`
+   - Test your endpoints using the Swagger UI at http://localhost:8000/docs
+
+2. **Integrate new endpoints to the frontend**
+
+   - Create new components in `Frontend/src/components/` folder
+   - Update `Frontend/src/App.jsx` to include your new components
+   - Use `fetch()` or libraries like `axios` to make API calls
+   - Handle loading states and errors appropriately
+   - Update the UI to display the data from your new endpoints
+
+## Resources
+
+- [FastAPI Documentation](https://fastapi.tiangolo.com/)
+- [React Documentation](https://react.dev/)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Google Generative AI Documentation](https://ai.google.dev/docs)
+
+## License
+
+This is a template project for educational purposes.
+```
+
+**RULE:** This is the ONLY content for Issue #01. Do NOT add:
+- Learning goals section
+- Acceptance criteria
+- Step-by-step guide sections
+- Dependencies section
+- Definition of Done
+- Raise PR
+
+It is a README document, not an issue with template sections.
+
+---
+
+## 3. FINAL TESTING ISSUE TEMPLATE
+
+**This should be the LAST issue in every project.**
+
+**File name pattern:** `issue-XX-final-testing.md` (where XX is the last issue number)
+
+```markdown
+# Final Testing and Application Flow Verification
+
+---
+
+## Summary
+
+Verify the complete application flow, ensure all features work together seamlessly, and document the user journey through the entire application. This issue ensures that all components, pages, and APIs integrate correctly and the application functions as expected from start to finish.
+
+---
+
+## Learning goals
+
+- Understand the complete application architecture and data flow
+- Learn how to perform end-to-end testing of a full-stack application
+- Identify and document the relationships between frontend and backend components
+- Verify authentication and authorization flows work correctly
+
+---
+
+## Requirements / Acceptance criteria
+
+- [ ] All pages load correctly without errors
+- [ ] Protected routes redirect to login when user is not authenticated
+- [ ] All CRUD operations work as expected (Create, Read, Update, Delete)
+- [ ] Firebase authentication works correctly (signup, login, logout)
+- [ ] All API endpoints return expected responses
+- [ ] UI is responsive across different screen sizes
+- [ ] Error states are handled gracefully with user-friendly messages
+- [ ] Loading states are displayed during async operations
+- [ ] All user interactions produce expected results
+- [ ] Complete application flow is documented
+
+---
+
+## Step-by-step guide
+
+1. **Document all pages and routes**
+   - Action: Create a comprehensive list of all pages in the application, their routes, whether they are protected, and what data they display
+   - Where: Create a testing document or add to PROJECT-README.md
+   - Goal: Have a clear map of all pages and their purposes
+   - Reference: [React Router Documentation](https://reactrouter.com/)
+
+2. **Document all API endpoints**
+   - Action: List all backend API endpoints, their methods (GET, POST, PUT, DELETE), whether they require authentication, and what data they handle
+   - Where: Testing document or PROJECT-README.md
+   - Goal: Understand all backend functionality and data flows
+   - Reference: [FastAPI Documentation](https://fastapi.tiangolo.com/)
+
+3. **Test authentication flow**
+   - Action: Verify the complete authentication process - signup, login, logout, and protected route access. Test both successful and failed authentication scenarios
+   - Where: Frontend application and Firebase console
+   - Goal: Ensure authentication works correctly and securely
+   - Reference: [Firebase Auth Documentation](https://firebase.google.com/docs/auth)
+
+4. **Test all CRUD operations**
+   - Action: For each main feature, test creating, reading, updating, and deleting data. Verify data persists correctly in the database
+   - Where: Application UI and Backend/database
+   - Goal: Confirm all data operations work as expected
+   - Reference: [SQLite Documentation](https://www.sqlite.org/docs.html)
+
+5. **Test user interactions and data flow**
+   - Action: Click through every button, link, and form in the application. Document what happens at each step, what API is called, and what data is displayed
+   - Where: Complete application walkthrough
+   - Goal: Ensure smooth user experience with no broken interactions
+   - Reference: Browser developer tools
+
+6. **Test error handling**
+   - Action: Test error scenarios - invalid inputs, network failures, unauthorized access attempts. Verify appropriate error messages are shown
+   - Where: Throughout the application
+   - Goal: Confirm the application handles errors gracefully
+   - Reference: Application error handling patterns
+
+7. **Test responsive design**
+   - Action: Test the application on different screen sizes (mobile, tablet, desktop) to ensure proper responsive behavior
+   - Where: Browser developer tools or actual devices
+   - Goal: Verify UI works well on all screen sizes
+   - Reference: [Tailwind Responsive Design](https://tailwindcss.com/docs/responsive-design)
+
+---
+
+## Time estimate
+
+- Expected time: 90-120 minutes
+
+---
+
+## Constraints
+
+- Tech stack: React, FastAPI, SQLite, Firebase, LangChain, Tailwind CSS
+- Not allowed: Automated testing frameworks (manual testing only for this issue)
+- Notes: Focus on manual end-to-end testing and documentation
+
+---
+
+## Dependencies
+
+- Blocked by: [All previous issues - this is the final issue]
+- Unblocks: None (final issue)
+
+---
+
+## Definition of Done
+
+- [ ] All acceptance criteria are met
+- [ ] Complete application flow is documented with tables showing pages, routes, protection status, and data
+- [ ] User interaction flow is documented showing what happens when users click different elements
+- [ ] All features have been manually tested and work correctly
+- [ ] Error scenarios have been tested and handled appropriately
+- [ ] Application is responsive and works on different screen sizes
+- [ ] No console errors or warnings in browser
+- [ ] Testing documentation is clear and comprehensive
+
+---
+
+## Raise PR
+
+- [ ] Create a feature branch for testing documentation
+- [ ] Add comprehensive testing documentation to the repository
+- [ ] Include screenshots or screen recordings of key flows
+- [ ] Document any bugs found and their resolutions
+- [ ] Ensure branch is up to date with `main`
+- [ ] Push branch and open a PR
+- [ ] Link this issue in the PR description
+- [ ] Request review from assigned reviewers
+
+---
+
+## Application Flow Documentation Template
+
+Include these tables in your testing documentation:
+
+### Pages and Routes
+
+| Page Name | Route | Protected | Data Displayed | Components Used |
+|-----------|-------|-----------|----------------|-----------------|
+| Landing | / | No | Static content | Navbar, Hero, Features, Footer |
+| Login | /login | No | Login form | LoginForm |
+| Signup | /signup | No | Signup form | SignupForm |
+| Dashboard | /dashboard | Yes | User's data list | Navbar, DataList, DataCard |
+| ... | ... | ... | ... | ... |
+
+### API Endpoints
+
+| Method | Endpoint | Protected | Purpose | LLM Integration |
+|--------|----------|-----------|---------|-----------------|
+| GET | /api/items | Yes | Get all items | No |
+| POST | /api/items | Yes | Create new item | Yes (analysis) |
+| GET | /api/items/:id | Yes | Get single item | No |
+| DELETE | /api/items/:id | Yes | Delete item | No |
+| ... | ... | ... | ... | ... |
+
+### User Interaction Flow
+
+| User Action | What Happens | API Called | Result |
+|-------------|--------------|------------|--------|
+| Click "Sign Up" on landing | Navigate to signup page | None | Signup form displayed |
+| Submit signup form | Firebase creates account | Firebase Auth | Redirect to login |
+| Submit login form | Firebase authenticates | Firebase Auth | Redirect to dashboard |
+| Click "Upload" button | Open upload modal | None | Modal visible |
+| Submit upload form | Send data to backend | POST /api/items | Item created and displayed |
+| ... | ... | ... | ... |
+
+### Protected Routes
+
+List all routes that require authentication:
+- /dashboard
+- /items/:id
+- /profile
+- ...
+
+### Error Scenarios Tested
+
+| Scenario | Expected Behavior | Actual Result |
+|----------|-------------------|---------------|
+| Login with invalid credentials | Show error message | ✓ Works correctly |
+| Access protected route without auth | Redirect to login | ✓ Works correctly |
+| Submit form with missing fields | Show validation errors | ✓ Works correctly |
+| ... | ... | ... |
+```
+
+---
+
+## USAGE NOTES
+
+1. **Issue #01** is always the same for all projects (project setup README)
+2. **Standard template** is used for issues #02 through second-to-last issue
+3. **Final testing template** is always the last issue
+4. For **combined frontend+backend issues**, use the standard template but organize steps into Backend and Frontend sections
+5. For **backend issues**, always start with database/model setup as step 1

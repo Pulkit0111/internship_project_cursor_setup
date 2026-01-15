@@ -1,0 +1,379 @@
+---
+title: Project Type Patterns
+description: Issue patterns for different project types (Audio, Image, NLP, Hybrid)
+applies_to_commands: [projectplan, generate]
+---
+
+# Project Type Patterns
+
+This file defines common issue patterns for different types of projects based on their primary functionality.
+
+---
+
+## 1. AUDIO PROCESSING PROJECTS
+
+### 1.1 Examples
+- Personal Voice Journal
+- Meeting Note Taker
+- Podcast Chapter Generator
+- Voice Command Todo Manager
+- Audio Emotion Detector
+- Language Learning Audio Quiz
+- Customer Support Audio Analyzer
+- Sleep Meditation Generator
+
+### 1.2 Core Features
+- Audio file upload/recording
+- Audio analysis using LLM (NO specialized transcription libraries)
+- Transcription generation
+- Summary/insights extraction
+- Audio metadata storage
+- Search and retrieval
+
+### 1.3 Issue Pattern (Issues #09-onwards)
+
+**Note:** With combined frontend+backend issues, total count will be 15-20 instead of 20-24
+
+| Issue | Type | Description |
+|-------|------|-------------|
+| #09 | Combined F+B | Upload Audio Feature (API endpoint + UI component) |
+| #10 | Backend + LLM | Process Audio with LangChain + LLM (analyze, transcribe) |
+| #11 | Combined F+B | Display All Audio Items (API + Dashboard integration) |
+| #12 | Combined F+B | Audio Detail View (API + Detail page) |
+| #13 | Combined F+B | Delete Audio Feature (API + UI integration) |
+| #14 | Combined F+B | Tag Management (API + UI component) |
+| #15 | Combined F+B | Search Audio (API + Search UI) |
+| #16 | Combined F+B | Export/Download Feature (API + UI) |
+| #17-18 | Project-specific | Additional features based on project needs |
+| #19 | Final Testing | Complete flow verification |
+
+### 1.4 Key Technologies
+- **Frontend:** React audio components, file upload
+- **Backend:** FastAPI file handling
+- **AI:** LangChain + LLM for audio understanding (NO Whisper, NO specialized libraries)
+- **Storage:** Local file system or cloud storage
+- **Database:** SQLite for metadata
+
+### 1.5 Important Notes
+- **DO NOT use specialized transcription libraries** (Whisper, speech-to-text APIs)
+- **USE LangChain + LLM** to understand and analyze audio content
+- Focus on LLM-based analysis, not traditional audio processing
+- Keep audio processing simple and LLM-centric
+
+---
+
+## 2. IMAGE PROCESSING PROJECTS
+
+### 2.1 Examples
+- Receipt Scanner and Expense Tracker
+- Plant Disease Identifier
+- Document Scanner and Organizer
+- Fashion Style Recommender
+- Handwriting Recognition Note App
+- Real Estate Property Analyzer
+- Art Style Transfer and Analysis
+- Quality Control Inspector
+
+### 2.2 Core Features
+- Image upload/capture
+- Image analysis using vision-enabled LLM (NO OCR libraries)
+- Text extraction from images
+- Object/pattern recognition
+- Image metadata storage
+- Search and categorization
+
+### 2.3 Issue Pattern (Issues #09-onwards)
+
+**Note:** With combined frontend+backend issues, total count will be 15-20 instead of 20-24
+
+| Issue | Type | Description |
+|-------|------|-------------|
+| #09 | Combined F+B | Upload Image Feature (API endpoint + UI component) |
+| #10 | Backend + LLM | Analyze Image with LangChain + Vision LLM (NO OCR) |
+| #11 | Combined F+B | Display All Images (API + Dashboard integration) |
+| #12 | Combined F+B | Image Detail View (API + Detail page with image viewer) |
+| #13 | Combined F+B | Delete Image Feature (API + UI integration) |
+| #14 | Combined F+B | Tag/Category Management (API + UI component) |
+| #15 | Combined F+B | Search Images (API + Search UI) |
+| #16 | Combined F+B | Export Results (API + UI) |
+| #17-18 | Project-specific | Additional features based on project needs |
+| #19 | Final Testing | Complete flow verification |
+
+### 2.4 Key Technologies
+- **Frontend:** React image components, file upload, image preview
+- **Backend:** FastAPI file handling, image storage
+- **AI:** LangChain + Vision-enabled LLM (NO OCR libraries like PyTesseract)
+- **Storage:** Local file system or cloud storage
+- **Database:** SQLite for metadata and analysis results
+
+### 2.5 Important Notes
+- **DO NOT use OCR libraries** (PyTesseract, Tesseract, Google Cloud Vision OCR)
+- **USE Vision-enabled LLM** (like Gemini Vision) to understand images
+- Focus on LLM-based image understanding, not traditional OCR
+- Let LLM extract text, identify objects, and provide insights
+
+---
+
+## 3. NLP + DATABASE PROJECTS
+
+### 3.1 Examples
+- Personal Knowledge Base with Natural Language Query
+- SQL Query Generator from Natural Language
+- Customer Support Chatbot with Database
+- Research Paper Summarizer with Citation Lookup
+- Job Recommendation Engine
+- Email Smart Assistant
+- Content Recommendation System
+
+### 3.2 Core Features
+- Document/text upload
+- Natural language processing
+- Semantic search with embeddings
+- RAG (Retrieval Augmented Generation)
+- Database querying with natural language
+- Context-aware responses
+
+### 3.3 Issue Pattern (Issues #09-onwards)
+
+**Note:** With combined frontend+backend issues, total count will be 15-20 instead of 20-24
+
+| Issue | Type | Description |
+|-------|------|-------------|
+| #09 | Combined F+B | Add Document/Content Feature (API + UI) |
+| #10 | Backend + LLM | Process Documents with LangChain (embeddings, vector store) |
+| #11 | Combined F+B | Search/Query Interface (API + Search UI) |
+| #12 | Backend + LLM | Semantic Search with LangChain (vector search, RAG) |
+| #13 | Combined F+B | Display Search Results (API + Results UI) |
+| #14 | Combined F+B | Document Detail View (API + Detail page) |
+| #15 | Combined F+B | Delete Document Feature (API + UI integration) |
+| #16 | Combined F+B | Tag/Category Management (API + UI) |
+| #17-18 | Project-specific | Additional features (filters, sorting, export, etc.) |
+| #19 | Final Testing | Complete flow verification |
+
+### 3.4 Key Technologies
+- **Frontend:** React chat/search interface, document display
+- **Backend:** FastAPI with LangChain integration
+- **AI:** LangChain for embeddings, vector stores, RAG, semantic search
+- **Storage:** SQLite for documents and metadata
+- **Vector Store:** Simple vector store (FAISS, ChromaDB, or in-memory)
+
+### 3.5 Important Notes
+- Focus on **semantic search** not just keyword matching
+- Use **embeddings** for better search results
+- Implement **RAG** for context-aware responses
+- Keep vector store simple (no complex infrastructure)
+- LangChain handles most of the NLP complexity
+
+---
+
+## 4. HYBRID PROJECTS (MULTI-MODAL)
+
+### 4.1 Examples
+- AI Resume Reviewer with Document Analysis
+- Automated Invoice Processing Agent
+- Food Recognition and Nutrition Analyzer
+- Event Planning Assistant Agent
+- Medical Report Analyzer
+- Real Estate Listing Generator
+- Interview Preparation Coach
+
+### 4.2 Core Features
+- Multiple input types (text, images, audio, documents)
+- Multi-modal analysis
+- Complex workflows
+- Integration of multiple AI capabilities
+- Rich data visualization
+
+### 4.3 Issue Pattern (Issues #09-onwards)
+
+**Note:** Hybrid projects may have more features, but still target 15-20 issues total
+
+| Issue | Type | Description |
+|-------|------|-------------|
+| #09 | Combined F+B | Primary Upload Feature (main input type) |
+| #10 | Backend + LLM | Primary Analysis with LangChain + LLM |
+| #11 | Combined F+B | Secondary Upload Feature (additional input type) |
+| #12 | Backend + LLM | Secondary Analysis/Processing |
+| #13 | Combined F+B | Display All Items (API + Dashboard) |
+| #14 | Combined F+B | Detail View with Multi-modal Display |
+| #15 | Combined F+B | Delete Feature (API + UI) |
+| #16 | Combined F+B | Advanced Feature 1 (project-specific) |
+| #17 | Combined F+B | Advanced Feature 2 (project-specific) |
+| #18 | Combined F+B | Export/Report Generation |
+| #19 | Final Testing | Complete flow verification |
+
+### 4.4 Key Technologies
+- **Frontend:** React with multiple component types (image, audio, text, etc.)
+- **Backend:** FastAPI with multiple file handlers
+- **AI:** LangChain with multiple LLM capabilities (vision, audio, text)
+- **Storage:** Mixed storage (files + database)
+- **Database:** SQLite for all metadata
+
+### 4.5 Important Notes
+- Combine related features to keep issue count manageable
+- Focus on **one primary feature** at a time
+- Use LLM for ALL AI tasks (no specialized libraries)
+- Keep complexity manageable for students
+- Ensure clear progression from simple to complex
+
+---
+
+## 5. PROGRESSIVE DIFFICULTY ACROSS ALL PROJECT TYPES
+
+### 5.1 Foundation Phase (Issues 1-8)
+**Same for ALL project types:**
+- Issue #01: Project Setup (README format)
+- Issue #02: Landing Page UI (static)
+- Issue #03: Signup Page UI (static)
+- Issue #04: Login Page UI (static)
+- Issue #05: Firebase Auth Setup
+- Issue #06: Integrate Signup with Firebase
+- Issue #07: Integrate Login with Firebase
+- Issue #08: Dashboard UI (protected route)
+
+### 5.2 Core CRUD Phase (Issues 9-15)
+**Varies by project type:**
+- Upload/Create functionality
+- LLM processing/analysis
+- Display/Read functionality
+- Detail view
+- Delete functionality
+- Basic search/filter
+
+### 5.3 Advanced Features Phase (Issues 16-18)
+**Project-specific:**
+- Tag management
+- Advanced search
+- Export/download
+- Additional AI features
+- Complex workflows
+- Data visualization
+
+### 5.4 Testing Phase (Issue 19)
+**Same for ALL project types:**
+- Final testing issue with complete flow verification
+
+---
+
+## 6. COMBINING FRONTEND + BACKEND ISSUES
+
+### 6.1 When to Combine
+
+Combine frontend and backend into a single issue when:
+- The feature is strongly connected (e.g., upload button + upload API)
+- Students benefit from seeing the complete feature flow
+- It reduces context switching
+- The combined work still fits in 90-120 minutes
+
+### 6.2 How to Structure Combined Issues
+
+```markdown
+## Step-by-step guide
+
+### Backend Implementation
+
+1. **Set up database and models**
+   - Action: Create database structure for this feature
+   - Where: Backend/database/
+   - Goal: Data layer ready
+   - Reference: [SQLite docs]
+
+2. **Create API endpoint**
+   - Action: Build the endpoint to handle this feature
+   - Where: Backend/routes/
+   - Goal: Working API endpoint
+   - Reference: [FastAPI docs]
+
+### Frontend Implementation
+
+3. **Create UI component**
+   - Action: Build the user interface for this feature
+   - Where: Frontend/src/components/
+   - Goal: Functional UI component
+   - Reference: [React docs]
+
+4. **Integrate with backend API**
+   - Action: Connect the UI to the backend endpoint
+   - Where: Frontend/src/components/
+   - Goal: Complete feature working end-to-end
+   - Reference: [Fetch API docs]
+
+5. **Test complete feature**
+   - Action: Verify the entire feature works correctly
+   - Where: Application
+   - Goal: Feature fully functional
+   - Reference: Browser dev tools
+```
+
+### 6.3 Benefits of Combined Issues
+
+- **Reduced issue count:** 15-20 instead of 20-24
+- **Better context:** Students see the complete picture
+- **Less switching:** Work on related code together
+- **Real understanding:** Learn how frontend and backend connect
+- **Faster progress:** Complete features, not fragments
+
+---
+
+## 7. ISSUE COUNT GUIDELINES BY PROJECT TYPE
+
+| Project Type | Typical Issue Count | Notes |
+|--------------|-------------------|-------|
+| Audio Processing | 15-18 issues | Depends on number of audio features |
+| Image Processing | 15-18 issues | Depends on analysis complexity |
+| NLP + Database | 16-19 issues | RAG and search add complexity |
+| Hybrid Multi-modal | 17-20 issues | Multiple input types increase count |
+
+**All counts include:**
+- Issues 1-8: Foundation (fixed)
+- Issues 9-X: Features (variable)
+- Final issue: Testing (fixed)
+
+---
+
+## 8. TECHNOLOGY MAPPING BY PROJECT TYPE
+
+### 8.1 Audio Projects
+- **Frontend:** React, file input, audio player
+- **Backend:** FastAPI, file storage
+- **AI:** LangChain + LLM (NO specialized audio libraries)
+- **Database:** SQLite
+
+### 8.2 Image Projects
+- **Frontend:** React, file input, image preview
+- **Backend:** FastAPI, file storage
+- **AI:** LangChain + Vision LLM (NO OCR libraries)
+- **Database:** SQLite
+
+### 8.3 NLP Projects
+- **Frontend:** React, text input, search interface
+- **Backend:** FastAPI, LangChain
+- **AI:** LangChain, embeddings, vector stores, RAG
+- **Database:** SQLite + simple vector store
+
+### 8.4 Hybrid Projects
+- **Frontend:** React, multiple input types
+- **Backend:** FastAPI, multiple handlers
+- **AI:** LangChain with multiple capabilities
+- **Database:** SQLite
+
+**Common across ALL types:**
+- Firebase for authentication
+- Tailwind CSS for styling
+- React Router for navigation
+- Vite for build tooling
+
+---
+
+## 9. REMEMBER
+
+**For ALL project types:**
+- Start with foundation (issues 1-8)
+- Combine related frontend+backend work
+- Use LLM for ALL AI tasks (no specialized libraries)
+- Keep issue count to 15-20
+- End with final testing issue
+- Firebase for auth, SQLite for data
+- Progressive difficulty: simple → complex
+- Each issue: 60-120 minutes
+- High-level guidance, not prescriptive code

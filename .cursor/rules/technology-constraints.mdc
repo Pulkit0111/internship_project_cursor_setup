@@ -1,0 +1,147 @@
+---
+title: Technology Constraints
+description: Allowed and prohibited technologies for student projects
+applies_to_commands: [projectplan, generate]
+---
+
+# Technology Constraints
+
+This file defines the strict technology boundaries for all student projects. Students are ONLY familiar with the technologies listed as allowed.
+
+---
+
+## 1. ALLOWED TECHNOLOGIES (STRICT - ONLY THESE)
+
+Students are ONLY familiar with these technologies:
+
+### 1.1 Python Basics
+- Variables, functions, loops, classes
+- File I/O operations
+- Standard library functions
+- Basic to intermediate Python
+
+### 1.2 LangChain Basics
+- Use LLMs for ANY AI-related tasks
+- Basic chains and StrOutputParser
+- Simple RAG applications
+- Basic vector stores
+- NOT allowed: Complex agents, CrewAI, advanced frameworks
+
+### 1.3 FastAPI (CRUD ONLY)
+- Create, Read, Update, Delete operations
+- Basic routing and endpoints
+- Request/response models with Pydantic
+- Simple middleware
+- File uploads
+- CORS configuration
+- NOT allowed: Complex authentication logic, WebSockets, background tasks
+
+### 1.4 React Basics
+- Components, JSX, props
+- State Management: useState, useEffect hooks
+- React Router DOM for routing
+- Fetching APIs: fetch() or axios
+- Tailwind CSS for styling
+- NOT allowed: Redux, MobX, Next.js, complex form libraries
+
+### 1.5 SQLite (CRUD Data ONLY)
+- Local SQLite database
+- Basic SQL queries (SELECT, INSERT, UPDATE, DELETE)
+- Simple table relationships
+- Students design their own schemas
+- NOT allowed: PostgreSQL, MySQL, MongoDB, cloud databases
+- **CRITICAL: NOT for authentication - use Firebase**
+
+### 1.6 Firebase (Authentication ONLY)
+- Firebase Authentication (email/password)
+- Firebase Realtime Database
+- Firebase SDK integration in frontend
+- **This is the ONLY allowed authentication method**
+
+### 1.7 Basic RAG Applications
+- Using LangChain
+- Simple vector stores
+- Document processing
+
+---
+
+## 2. PROHIBITED TECHNOLOGIES (STRICTLY NOT ALLOWED)
+
+### 2.1 Authentication & Security
+- ❌ JWT (JSON Web Tokens)
+- ❌ OAuth or OAuth2
+- ❌ External authentication providers (Google, Facebook, Auth0)
+- ❌ Backend session management
+- ❌ Password hashing logic (bcrypt, passlib, hashlib)
+- ❌ Session tables or session IDs in database
+
+### 2.2 Processing & Analysis
+- ❌ OCR libraries (PyTesseract, Tesseract, Google Cloud Vision OCR)
+- ❌ Predefined PDF/image extraction pipelines
+- ❌ Complex LangChain chains
+- ❌ Forced analysis pipelines
+
+### 2.3 Deployment & Infrastructure
+- ❌ Docker or Docker Compose
+- ❌ Kubernetes
+- ❌ Any containerization tools
+- ❌ Cloud deployment configurations
+- ❌ CI/CD pipelines
+
+### 2.4 Databases & Caching
+- ❌ PostgreSQL, MySQL
+- ❌ MongoDB, Redis
+- ❌ Cloud databases (AWS RDS, Azure SQL, etc.)
+- ❌ Database replication or clustering
+
+### 2.5 Background Processing
+- ❌ Celery
+- ❌ Background workers
+- ❌ Task queues
+- ❌ Schedulers (cron, APScheduler)
+
+### 2.6 Advanced Frameworks
+- ❌ CrewAI or complex multi-agent systems
+- ❌ Next.js (use React + Vite)
+- ❌ GraphQL
+- ❌ WebSockets (unless absolutely necessary)
+- ❌ Microservices architecture
+
+---
+
+## 3. TECH STACK REPLACEMENT RULES
+
+When project_ideas.md mentions disallowed tech, AUTOMATICALLY REPLACE:
+
+| Mentioned | Replace With | Reason |
+|-----------|--------------|--------|
+| PostgreSQL/MongoDB | SQLite | Students only know SQLite |
+| JWT/OAuth/Session auth | Firebase Auth | Only allowed auth method |
+| Docker | Remove entirely | Run locally only |
+| Redis/Celery | Remove entirely | No background processing |
+| Next.js | React with Vite | Students know React basics |
+| PyTesseract/OCR | LangChain + LLM | Use LLMs to understand files |
+| Complex ML models | LangChain basics | Keep it simple |
+| CrewAI | Simple LangChain | Basic chains only |
+
+---
+
+## 4. VALIDATION RULES
+
+**PRE-GENERATION VALIDATION:**
+1. Check if technology is in allowed list
+2. If NOT → Apply replacement from Section 3
+3. If no replacement → REMOVE the technology mention
+4. Continue with allowed technologies only
+
+**DURING GENERATION:**
+- Scan every step, every action for technology mentions
+- Validate against allowed list
+- Replace or remove disallowed technologies immediately
+- Never proceed with forbidden technologies
+
+**IF IN DOUBT:**
+- Use simpler, more basic technology
+- Reference only allowed technologies
+- Let students implement with what they know
+- Follow the replacement rules strictly
