@@ -154,8 +154,6 @@ Example:
 
 | Method | Endpoint | Protected | Purpose | LLM Integration | Request Body | Response |
 |--------|----------|-----------|---------|-----------------|--------------|----------|
-| POST | /api/auth/signup | No | User registration via Firebase | No | {email, password} | {success, message} |
-| POST | /api/auth/login | No | User login via Firebase | No | {email, password} | {success, token} |
 | POST | /api/recordings | Yes | Upload new recording | Yes | {file, userId} | {id, status} |
 | GET | /api/recordings | Yes | Get all user recordings | No | - | [{id, title, date}] |
 | GET | /api/recordings/:id | Yes | Get single recording | No | - | {id, title, transcription, summary} |
@@ -164,13 +162,20 @@ Example:
 | DELETE | /api/recordings/:id/tags/:tag | Yes | Remove tag | No | - | {success, message} |
 | GET | /api/search | Yes | Search recordings | No | ?query=text | [{id, title, matches}] |
 
+**Note:** Authentication is NOT listed here because Firebase Auth is handled entirely on the frontend via Firebase SDK. No backend auth endpoints are needed.
+
 ### 5.2 Protected vs Unprotected Endpoints
 
-**Unprotected (Public):**
-- All authentication endpoints (handled by Firebase)
-- Landing page content endpoints (if any)
+**Authentication (Firebase SDK - Frontend Only):**
+- Signup, login, logout handled by Firebase SDK in frontend
+- NO backend auth endpoints required
+- Firebase token validation can be added to protected endpoints
 
-**Protected (Requires Firebase Auth):**
+**Unprotected (Public):**
+- Landing page content endpoints (if any)
+- Health check endpoints
+
+**Protected (Requires Firebase Auth Token):**
 - All CRUD operations on user data
 - All data retrieval endpoints
 - All LLM processing endpoints
@@ -429,15 +434,7 @@ Upload Recording → UploadModal → POST /api/recordings → FastAPI → LangCh
 
 ## 11. Notes and Considerations
 
-### 11.1 For Reviewers
-
-- Verify all endpoints are necessary
-- Check that tech stack matches allowed technologies
-- Ensure issue count is reasonable (15-20)
-- Confirm features are achievable in timeframe
-- Validate that challenges are addressed
-
-### 11.2 For Students
+### 11.1 Developer Guidelines
 
 - This document is your roadmap
 - You can improve upon suggested structures
@@ -445,7 +442,7 @@ Upload Recording → UploadModal → POST /api/recordings → FastAPI → LangCh
 - Ask for help when stuck
 - Document your decisions and learnings
 
-### 11.3 Flexibility
+### 11.2 Flexibility
 
 - Component names can be changed
 - Additional components can be added
